@@ -11,7 +11,7 @@ import {
 
 import portrait from "@/assets/trader-portrait.jpg";
 
-const WHATSAPP_URL = "https://chat.whatsapp.com/Ixow209ZsVAIdVV53asWZI";
+const WHATSAPP_URL = "https://chat.whatsapp.com/DURQBCidaDn82cnpkRY8g0";
 const TELEGRAM_URL = "https://t.me/+e10G7CD4bawxYjQ0";
 
 const TITLE = "GlobalFX Desk — Daily forex setups on WhatsApp & Telegram";
