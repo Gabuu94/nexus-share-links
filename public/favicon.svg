@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="12" fill="#101728" />
-  <!-- G: thick ring with an opening at the upper right and a bar into the middle -->
-  <circle cx="22" cy="32" r="10" fill="none" stroke="#E8C25A" stroke-width="6" />
-  <rect x="23" y="14" width="16" height="14" fill="#101728" />
-  <rect x="22" y="29" width="11" height="6" fill="#E8C25A" />
+  <rect width="64" height="64" rx="10" fill="#101728" />
+  <!-- G: open ring (C) plus a bar into the middle -->
+  <path d="M30 24 A11 11 0 1 0 30 40" fill="none" stroke="#E8C25A" stroke-width="7" />
+  <rect x="24" y="29" width="10" height="7" fill="#E8C25A" />
   <!-- F: stem with two arms -->
-  <rect x="40" y="18" width="6" height="28" fill="#E8C25A" />
-  <rect x="40" y="18" width="16" height="6" fill="#E8C25A" />
-  <rect x="40" y="29" width="13" height="6" fill="#E8C25A" />
+  <rect x="41" y="16" width="7" height="32" fill="#E8C25A" />
+  <rect x="41" y="16" width="15" height="7" fill="#E8C25A" />
+  <rect x="41" y="29" width="12" height="7" fill="#E8C25A" />
 </svg>
