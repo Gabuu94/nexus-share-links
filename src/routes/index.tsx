@@ -87,7 +87,7 @@ function Index() {
           Join the communities
         </h1>
         <p className="mt-3 text-center text-sm text-muted-foreground">
-          Pick a channel — both are free and you can leave any time.
+          Pick a channel — free to join, leave any time.
         </p>
 
         <div className="mt-8 flex flex-col gap-3">
