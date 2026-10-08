@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Send } from "lucide-react";
+import type { ReactNode } from "react";
 
 const WHATSAPP_URL = "https://chat.whatsapp.com/DURQBCidaDn82cnpkRY8g0";
 const TELEGRAM_URL = "https://t.me/+e10G7CD4bawxYjQ0";
