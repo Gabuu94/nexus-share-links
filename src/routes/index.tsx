@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Send } from "lucide-react";
 import type { ReactNode } from "react";
+import logoAsset from "../assets/samir-logo.png.asset.json";
 
 const WHATSAPP_URL = "https://chat.whatsapp.com/DURQBCidaDn82cnpkRY8g0";
 const TELEGRAM_URL = "https://t.me/+e10G7CD4bawxYjQ0";
 
-const TITLE = "GlobalFX Desk — Join the communities";
+const TITLE = "Samir Trading Hub — Join the communities";
 const DESCRIPTION =
-  "The GlobalFX desk on WhatsApp and Telegram. Pick a channel and join — free, no spam.";
+  "The Samir Trading Hub on WhatsApp and Telegram. Pick a channel and join — free, no spam.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,13 +64,22 @@ function Index() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-5 py-16">
       <div className="w-full max-w-sm">
-        <div className="flex items-center justify-center gap-3">
-          <span className="grid size-11 place-items-center rounded-xl border border-primary/40 bg-primary/10 font-mono text-sm font-bold text-primary">
-            GF
-          </span>
-          <span className="leading-tight">
-            <span className="block text-base font-semibold">GlobalFX</span>
-            <span className="block text-xs text-muted-foreground">Trading Desk</span>
+        <div className="flex flex-col items-center gap-4">
+          <img
+            src={logoAsset.url}
+            alt="Samir Trading Hub emblem"
+            width={64}
+            height={64}
+            className="size-16 rounded-2xl border border-primary/30"
+          />
+          <span className="text-center leading-tight">
+            <span className="block text-xl font-bold uppercase tracking-[0.22em]">Samir</span>
+            <span className="mt-1 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+              Trading Hub
+            </span>
+            <span className="mt-3 block font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">
+              Learn | Analyze | Trade | Grow
+            </span>
           </span>
         </div>
 
@@ -98,7 +108,7 @@ function Index() {
         </div>
 
         <p className="mt-10 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} GlobalFX Trading Desk
+          © {new Date().getFullYear()} Samir Trading Hub
         </p>
       </div>
     </div>
