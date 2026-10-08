@@ -44,7 +44,7 @@ function ChannelButton({
   label: string;
   className: string;
   iconClassName: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }) {
   return (
     <a
