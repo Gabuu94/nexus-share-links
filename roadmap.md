@@ -1,4 +1,4 @@
 - [x] Store community links with admin-only updates.
 - [x] Add admin login, password recovery, and link editor.
 - [ ] Verify signed-in saving end-to-end — waiting for owner to create/verify samir@gmail.com.
-- [ ] Verify public links and signed-out access restrictions.
+- [x] Verify public links and signed-out access restrictions.
