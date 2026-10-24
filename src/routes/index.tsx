@@ -1,16 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Send } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Send, LockKeyhole } from "lucide-react";
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
+import { getCommunityLinks } from '@/lib/community-links.functions';
+import { linksQueryKey } from '@/lib/community-links';
 import type { ReactNode } from "react";
 import logoAsset from "../assets/samir-logo.png.asset.json";
 
-const WHATSAPP_URL = "https://chat.whatsapp.com/CCSoPjr7JgVHtg6rp75ZkZ";
-const TELEGRAM_URL = "https://t.me/+e10G7CD4bawxYjQ0";
+const communityOptions = queryOptions({ queryKey: linksQueryKey, queryFn: () => getCommunityLinks(), staleTime: 0, refetchOnWindowFocus: true });
 
 const TITLE = "Samir Trading Hub — Join the communities";
 const DESCRIPTION =
   "The Samir Trading Hub on WhatsApp and Telegram. Pick a channel and join — free, no spam.";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(communityOptions),
   head: () => ({
     meta: [
       { title: TITLE },
@@ -61,6 +65,7 @@ function ChannelButton({
 }
 
 function Index() {
+  const { data: links } = useSuspenseQuery(communityOptions);
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-5 py-16">
       <div className="w-full max-w-sm">
@@ -92,14 +97,14 @@ function Index() {
 
         <div className="mt-8 flex flex-col gap-3">
           <ChannelButton
-            href={WHATSAPP_URL}
+            href={links.whatsapp}
             label="Join on WhatsApp"
             className="bg-whatsapp text-whatsapp-foreground"
             iconClassName="flex size-6 items-center justify-center"
             icon={<WhatsAppIcon className="size-6" />}
           />
           <ChannelButton
-            href={TELEGRAM_URL}
+            href={links.telegram}
             label="Join on Telegram"
             className="bg-telegram text-telegram-foreground"
             iconClassName="flex size-6 items-center justify-center"
@@ -110,6 +115,7 @@ function Index() {
         <p className="mt-10 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Samir Trading Hub
         </p>
+        <div className="mt-3 flex justify-center"><Button asChild variant="ghost" size="sm" className="text-muted-foreground"><Link to="/admin"><LockKeyhole />Admin</Link></Button></div>
       </div>
     </div>
   );
