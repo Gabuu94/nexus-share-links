@@ -3,7 +3,7 @@ import { Send } from "lucide-react";
 import type { ReactNode } from "react";
 import logoAsset from "../assets/samir-logo.png.asset.json";
 
-const WHATSAPP_URL = "https://chat.whatsapp.com/DURQBCidaDn82cnpkRY8g0";
+const WHATSAPP_URL = "https://chat.whatsapp.com/CCSoPjr7JgVHtg6rp75ZkZ";
 const TELEGRAM_URL = "https://t.me/+e10G7CD4bawxYjQ0";
 
 const TITLE = "Samir Trading Hub — Join the communities";
