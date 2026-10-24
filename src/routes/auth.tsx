@@ -5,7 +5,6 @@ import { LogIn, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
-import { lovable } from '@/integrations/lovable';
 
 export const Route = createFileRoute('/auth')({
   head: () => ({ meta: [
@@ -28,15 +27,6 @@ function Auth() {
       if (data.user) void navigate({ to: '/admin', replace: true });
     });
   }, [navigate]);
-  async function googleSignIn() {
-    setBusy(true); setMessage('');
-    try {
-      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: `${window.location.origin}/auth` });
-      if (result.error) { setMessage('Google sign-in could not finish. Please try again.'); return; }
-      if (!result.redirected) await navigate({ to: '/admin', replace: true });
-    } catch { setMessage('Google sign-in could not finish. Please try again.'); }
-    finally { setBusy(false); }
-  }
   async function submit(event: FormEvent) {
     event.preventDefault(); setMessage('');
     const parsed = z.string().trim().email().max(255).safeParse(email);
@@ -69,7 +59,6 @@ function Auth() {
       <Button type="submit" className="h-11 w-full" disabled={busy}>{mode === 'forgot' ? <Mail /> : <LogIn />}{busy ? 'Please wait…' : mode === 'login' ? 'Sign in' : mode === 'signup' ? 'Create account' : 'Send reset link'}</Button>
       {message && <p role="status" className="text-sm text-muted-foreground">{message}</p>}
     </form>
-    {mode !== 'forgot' && <Button variant="outline" className="mt-4 h-11 w-full" disabled={busy} onClick={googleSignIn}>Continue with Google</Button>}
     <div className="mt-5 flex flex-wrap justify-between gap-2">
       <Button variant="link" className="px-0" onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setMessage(''); }}>{mode === 'login' ? 'Create admin account' : 'Back to sign in'}</Button>
       {mode === 'login' && <Button variant="link" className="px-0" onClick={() => { setMode('forgot'); setMessage(''); }}>Forgot password?</Button>}
