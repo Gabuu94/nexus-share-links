@@ -1,0 +1,3 @@
+- [ ] Store community links with admin-only updates.
+- [ ] Add admin login, password recovery, and link editor.
+- [ ] Verify saving, public links, and access restrictions.
