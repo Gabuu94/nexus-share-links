@@ -62,6 +62,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_community_links: {
+        Args: { _telegram: string; _whatsapp: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin"
