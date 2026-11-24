@@ -9,7 +9,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { getAdminAccess, getCommunityLinks, saveCommunityLinks } from '@/lib/community-links.functions';
 import { linksQueryKey, linkUpdateSchema } from '@/lib/community-links';
 
-const accessOptions = queryOptions({ queryKey: ['admin-access'], queryFn: () => getAdminAccess() });
+const accessOptions = queryOptions({ queryKey: ['admin-access'], queryFn: async () => {
+  try { return { ...(await getAdminAccess()), offline: false }; }
+  catch { return { isAdmin: false, offline: true }; }
+}, staleTime: 0 });
 const linkOptions = queryOptions({ queryKey: linksQueryKey, queryFn: () => getCommunityLinks(), staleTime: 0 });
 
 export const Route = createFileRoute('/_authenticated/admin')({
@@ -63,7 +66,7 @@ function Admin() {
       <Button variant="ghost" onClick={signOut}><LogOut />Sign out</Button>
     </div>
     <h1 className="text-2xl font-bold">Community links</h1>
-    {!access.isAdmin ? <p role="alert" className="mt-6 text-destructive">This account does not have admin access.</p> :
+    {access.offline ? <p role="alert" className="mt-6 text-destructive">Link editing is offline right now. Your community page still shows your current links — please try again later.</p> : !access.isAdmin ? <p role="alert" className="mt-6 text-destructive">This account does not have admin access.</p> :
       <form onSubmit={submit} className="mt-8 space-y-6">
         <div className="space-y-2"><label htmlFor="whatsapp" className="text-sm font-medium">WhatsApp group link</label><Input id="whatsapp" type="url" required maxLength={2048} value={whatsapp} onChange={e => { setWhatsapp(e.target.value); setMessage(''); }} /></div>
         <div className="space-y-2"><label htmlFor="telegram" className="text-sm font-medium">Telegram link</label><Input id="telegram" type="url" required maxLength={2048} value={telegram} onChange={e => { setTelegram(e.target.value); setMessage(''); }} /></div>

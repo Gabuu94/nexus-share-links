@@ -36,7 +36,10 @@ function Auth() {
       const { error } = await supabase.auth.signInWithPassword({ email: parsed.data, password });
       if (error) throw error;
       await navigate({ to: '/admin', replace: true });
-    } catch (error) { setMessage(error instanceof Error ? error.message : 'Unable to sign in. Please try again.'); }
+    } catch (error) {
+      const text = error instanceof Error ? error.message : '';
+      setMessage(/fetch|network|unavailable|timeout/i.test(text) || !text ? 'Sign-in is offline right now. Please try again later.' : text);
+    }
     finally { setBusy(false); }
   }
   return <main className="mx-auto flex min-h-screen w-full max-w-sm flex-col justify-center px-5 py-12">
