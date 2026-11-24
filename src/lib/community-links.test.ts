@@ -13,3 +13,9 @@ describe('community invite updates', () => {
     expect(linkUpdateSchema.safeParse({ ...links, telegram: 'javascript:alert(1)' }).success).toBe(false);
   });
 });
+describe('fallback links', () => {
+  it('are valid invite links', async () => {
+    const { fallbackLinks } = await import('./community-links');
+    expect(linkUpdateSchema.safeParse(fallbackLinks).success).toBe(true);
+  });
+});

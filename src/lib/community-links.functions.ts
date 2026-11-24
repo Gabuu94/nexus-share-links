@@ -1,9 +1,18 @@
 import { createServerFn } from '@tanstack/react-start';
 import { createClient } from '@supabase/supabase-js';
 import { requireSupabaseAuth } from '@/integrations/supabase/auth-middleware';
-import { linkUpdateSchema } from './community-links';
+import { fallbackLinks, linkUpdateSchema } from './community-links';
 
 export const getCommunityLinks = createServerFn({ method: 'GET' }).handler(async () => {
+  try {
+    return await loadLinksFromCloud();
+  } catch (error) {
+    console.error('Community links fell back to built-in defaults:', error);
+    return fallbackLinks;
+  }
+});
+
+async function loadLinksFromCloud() {
   const url = process.env['SUPABASE_URL'];
   const key = process.env['SUPABASE_PUBLISHABLE_KEY'];
   if (!url || !key) throw new Error('Community links are unavailable.');
@@ -13,7 +22,7 @@ export const getCommunityLinks = createServerFn({ method: 'GET' }).handler(async
       const headers = new Headers(init?.headers);
       if (key.startsWith('sb_') && headers.get('Authorization') === `Bearer ${key}`) headers.delete('Authorization');
       headers.set('apikey', key);
-      return fetch(input, { ...init, headers });
+      return fetch(input, { ...init, headers, signal: init?.signal ?? AbortSignal.timeout(5000) });
     } },
   });
   const { data, error } = await client.from('community_links').select('id,url');
@@ -21,7 +30,7 @@ export const getCommunityLinks = createServerFn({ method: 'GET' }).handler(async
   const whatsapp = data?.find(row => row.id === 'whatsapp')?.url;
   const telegram = data?.find(row => row.id === 'telegram')?.url;
   return linkUpdateSchema.parse({ whatsapp, telegram });
-});
+}
 
 export const getAdminAccess = createServerFn({ method: 'POST' })
   .middleware([requireSupabaseAuth])
